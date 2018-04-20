@@ -1,29 +1,26 @@
 use std::io;
 
 fn main() {
+    println!("输入要求的N阶fib数列");
+    let mut num = String::new();
 
-    let mut s = String::from("hello world");
+    io::stdin().read_line(&mut num)
+        .expect("Failed to read line");
 
-    let word = first_word(&s[..]);
+    let num: i32 = num.trim().parse()
+        .expect("需要输入一个数字");
 
-    let my_string_literal = "hello world";
+    println!("输入的N为：{}", num);
 
-    // first_word works on slices of string literals
-    let word = first_word(&my_string_literal[..]);
+    let total = fib(num);
 
-    // since string literals *are* string slices already,
-    // this works too, without the slice syntax!
-    let word = first_word(my_string_literal);
+    println!("结果为：{}", total);
+
 }
 
-fn first_word(s: &str) -> &str {
-    let bytes = s.as_bytes();
 
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &s[0..i];
-        }
-    }
-
-    &s[..]
+fn fib(fib_num:i32) -> u64 {
+    if fib_num==1 { 1 }
+    else if fib_num==2 { 1 }
+    else { fib(fib_num-1) + fib(fib_num-2) }
 }
