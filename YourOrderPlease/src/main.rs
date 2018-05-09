@@ -1,10 +1,8 @@
 fn order(sentence: &str) -> String {
-    let mut s = String::new();
     let mut words: Vec<&str> = sentence.split_whitespace().collect();
 //    let order: Vec<i32> = sentence.matches(char::is_numeric).map(|s| s.parse().unwrap()).collect();
     words.sort_by(|a, b| a.matches(char::is_numeric).last().unwrap().parse::<i32>().unwrap().cmp(&b.matches(char::is_numeric).last().unwrap().parse::<i32>().unwrap()));
-    s = words.join(" ");
-    return s;
+    words.join(" ")
 }
 
 
