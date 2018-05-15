@@ -1,14 +1,15 @@
 extern crate stopwatch;
-use stopwatch::{Stopwatch};
+
+use stopwatch::Stopwatch;
 
 fn list_squared(m: u64, n: u64) -> Vec<(u64, u64)> {
     let sw = Stopwatch::start_new();
     let mut final_vec = Vec::new();
     for i in m..n + 1 {
         let mut sum = 0;
-        for x in 1..i+1 {
+        for x in 1..i + 1 {
             if i % x == 0 {
-                sum += x*x;
+                sum += x * x;
             }
         }
         let b = (sum as f64).sqrt();
