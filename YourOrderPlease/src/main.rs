@@ -2,6 +2,7 @@ fn order(sentence: &str) -> String {
     let mut s = String::new();
     let mut words: Vec<&str> = sentence.split_whitespace().collect();
     let order: Vec<i32> = sentence.matches(char::is_numeric).map(|s| s.parse().unwrap()).collect();
+    words.sort_by(|a, b| )
     println!("{:?}", "4"-"3");
     println!("{:?}", order);
     return s;
