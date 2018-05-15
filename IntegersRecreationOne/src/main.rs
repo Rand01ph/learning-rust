@@ -1,15 +1,24 @@
+extern crate stopwatch;
+use stopwatch::{Stopwatch};
+
 fn list_squared(m: u64, n: u64) -> Vec<(u64, u64)> {
+    let sw = Stopwatch::start_new();
     let mut final_vec = Vec::new();
     for i in m..n + 1 {
-        let sum = (1..i + 1).filter_map(|x| if i % x == 0 { Some(x * x) } else { None }).sum();
+        let mut sum = 0;
+        for x in 1..i+1 {
+            if i % x == 0 {
+                sum += x*x;
+            }
+        }
         let b = (sum as f64).sqrt();
         if b.fract() == 0.0_f64 {
             final_vec.push((i, sum));
         }
     }
-    return final_vec;
+    println!("total took {}ms", sw.elapsed_ms());
+    final_vec
 }
-
 
 fn testing(m: u64, n: u64, exp: Vec<(u64, u64)>) -> () {
     assert_eq!(list_squared(m, n), exp)
