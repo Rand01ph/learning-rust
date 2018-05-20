@@ -1,0 +1,6 @@
+[package]
+name = "gcd"
+version = "0.1.0"
+authors = ["Rand01ph <tanyawei1991@gmail.com>"]
+
+[dependencies]
