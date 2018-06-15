@@ -2,12 +2,29 @@ extern crate hyper;
 extern crate hyper_tls;
 extern crate serde;
 extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
 
 use std::env;
 use hyper_tls::HttpsConnector;
 use hyper::{Body, Client, Request};
 use hyper::rt::{self, lazy, Future, Stream};
 use serde_json::{Value, Error};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Regions {
+    name: String,
+    slug: String,
+    sizes: Vec<String>,
+    features: Vec<String>,
+    available: bool,
+}
+
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Results {
+    regions: Vec<Regions>
+}
 
 fn main() {
     rt::run(lazy(|| {
@@ -29,14 +46,10 @@ fn main() {
             })
             .and_then(|body| {
                 let s = ::std::str::from_utf8(&body)
-                    .expect("httpbin sends utf-8 JSON");
-
-                println!("body: {}", s);
-
-                let v: Value = serde_json::from_str(&s).unwrap();
-
-                println!("regions is {}", v["regions"]);
-
+                    .expect("digitalocean sends utf-8 JSON");
+                let v: Results = serde_json::from_str(&s).unwrap();
+                let all_slug: Vec<String> = v.regions.into_iter().map(|x| x.slug).collect();
+                println!("all_available_slug is {:?}", all_slug);
                 Ok(())
             })
             .map_err(|err| {
